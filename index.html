@@ -4,29 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Kavearassu K | Drone Technology & Mechanical Design</title>
+    <title>Kavearasu | Drone & Ocean Technology Engineer</title>
 
-    <!-- Tailwind CSS -->
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
         tailwind.config = {
             darkMode: 'class',
+
             theme: {
                 extend: {
                     colors: {
-                        drone: {
+                        ocean: {
                             50: '#ecfeff',
                             100: '#cffafe',
+                            200: '#a5f3fc',
                             300: '#67e8f9',
                             400: '#22d3ee',
                             500: '#06b6d4',
                             600: '#0891b2',
                             700: '#0e7490',
+                            800: '#155e75',
                             900: '#164e63'
                         },
-                        electric: '#38bdf8',
-                        neon: '#00f5ff'
+
+                        deep: {
+                            900: '#020617',
+                            950: '#01030a'
+                        },
+
+                        electric: '#38bdf8'
                     },
 
                     fontFamily: {
@@ -34,40 +42,74 @@
                     },
 
                     animation: {
-                        'gradient-x': 'gradient-x 8s ease infinite',
-                        'float': 'float 6s ease-in-out infinite',
-                        'pulse-slow': 'pulse 4s ease-in-out infinite',
-                        'spin-slow': 'spin 20s linear infinite',
-                        'drone-float': 'droneFloat 5s ease-in-out infinite'
+                        float: 'float 6s ease-in-out infinite',
+                        floatSlow: 'floatSlow 9s ease-in-out infinite',
+                        pulseGlow: 'pulseGlow 3s ease-in-out infinite',
+                        wave: 'wave 8s ease-in-out infinite',
+                        spinSlow: 'spin 15s linear infinite',
+                        droneMove: 'droneMove 8s ease-in-out infinite',
+                        scan: 'scan 3s linear infinite'
                     },
 
                     keyframes: {
-                        'gradient-x': {
-                            '0%, 100%': {
-                                'background-size': '200% 200%',
-                                'background-position': 'left center'
-                            },
-                            '50%': {
-                                'background-size': '200% 200%',
-                                'background-position': 'right center'
-                            }
-                        },
 
-                        'float': {
-                            '0%, 100%': {
+                        float: {
+                            '0%,100%': {
                                 transform: 'translateY(0px)'
                             },
                             '50%': {
-                                transform: 'translateY(-15px)'
+                                transform: 'translateY(-18px)'
                             }
                         },
 
-                        'droneFloat': {
-                            '0%, 100%': {
-                                transform: 'translateY(0) rotate(0deg)'
+                        floatSlow: {
+                            '0%,100%': {
+                                transform: 'translateY(0px) rotate(0deg)'
                             },
                             '50%': {
-                                transform: 'translateY(-18px) rotate(1deg)'
+                                transform: 'translateY(-25px) rotate(2deg)'
+                            }
+                        },
+
+                        pulseGlow: {
+                            '0%,100%': {
+                                boxShadow: '0 0 20px rgba(34,211,238,.2)'
+                            },
+                            '50%': {
+                                boxShadow: '0 0 60px rgba(34,211,238,.6)'
+                            }
+                        },
+
+                        wave: {
+                            '0%,100%': {
+                                transform: 'translateX(0)'
+                            },
+                            '50%': {
+                                transform: 'translateX(-30px)'
+                            }
+                        },
+
+                        droneMove: {
+                            '0%,100%': {
+                                transform: 'translate(0,0) rotate(-2deg)'
+                            },
+                            '25%': {
+                                transform: 'translate(20px,-15px) rotate(2deg)'
+                            },
+                            '50%': {
+                                transform: 'translate(0,-30px) rotate(-2deg)'
+                            },
+                            '75%': {
+                                transform: 'translate(-20px,-15px) rotate(2deg)'
+                            }
+                        },
+
+                        scan: {
+                            '0%': {
+                                transform: 'translateY(-100%)'
+                            },
+                            '100%': {
+                                transform: 'translateY(100%)'
                             }
                         }
                     }
@@ -76,1115 +118,1717 @@
         }
     </script>
 
-    <!-- Google Fonts -->
+    <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-          rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
 
     <!-- Font Awesome -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    >
 
     <style>
 
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            transition: background-color .3s ease, color .3s ease;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(6,182,212,.10), transparent 30%),
+                radial-gradient(circle at 80% 40%, rgba(14,116,144,.10), transparent 30%),
+                #020617;
+            transition: background .4s ease, color .4s ease;
         }
 
-        /* Glass */
+        .light-body {
+            background:
+                radial-gradient(circle at 20% 20%, rgba(6,182,212,.08), transparent 30%),
+                #f0f9ff;
+        }
+
         .glass {
-            background: rgba(255,255,255,.68);
+            background: rgba(2, 15, 30, .65);
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
-            border: 1px solid rgba(255,255,255,.35);
+            border: 1px solid rgba(56,189,248,.14);
         }
 
-        .dark .glass {
-            background: rgba(8,20,35,.78);
-            border: 1px solid rgba(56,189,248,.12);
+        .glass-light {
+            background: rgba(255,255,255,.65);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(14,116,144,.12);
         }
 
-        .glass-card {
-            background: rgba(255,255,255,.55);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid rgba(203,213,225,.8);
+        .gradient-text {
+            background:
+                linear-gradient(
+                    90deg,
+                    #22d3ee,
+                    #38bdf8,
+                    #60a5fa,
+                    #22d3ee
+                );
+            background-size: 250% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradientMove 5s linear infinite;
         }
 
-        .dark .glass-card {
-            background: rgba(15,30,48,.68);
-            border: 1px solid rgba(56,189,248,.1);
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% center;
+            }
+
+            100% {
+                background-position: 250% center;
+            }
         }
 
-        /* Drone grid background */
-        .tech-grid {
+        .ocean-grid {
             background-image:
-                linear-gradient(rgba(6,182,212,.08) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(6,182,212,.08) 1px, transparent 1px);
-            background-size: 45px 45px;
+                linear-gradient(rgba(34,211,238,.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(34,211,238,.05) 1px, transparent 1px);
+
+            background-size: 50px 50px;
         }
 
-        /* Glowing backgrounds */
-        .glow-bg {
+        .glow {
+            box-shadow:
+                0 0 30px rgba(34,211,238,.15),
+                inset 0 0 30px rgba(34,211,238,.03);
+        }
+
+        .neon-border {
+            border: 1px solid rgba(34,211,238,.3);
+            box-shadow:
+                0 0 25px rgba(34,211,238,.08);
+        }
+
+        .sonar-circle {
             position: absolute;
+            border: 1px solid rgba(34,211,238,.15);
             border-radius: 50%;
-            filter: blur(100px);
-            opacity: .35;
-            pointer-events: none;
-            z-index: 0;
+            animation: sonar 5s infinite;
         }
 
-        /* Drone rotor */
-        .rotor {
-            animation: spin 2s linear infinite;
+        @keyframes sonar {
+            0% {
+                transform: scale(.5);
+                opacity: .8;
+            }
+
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
         }
 
-        /* Scrollbar */
+        .wave-line {
+            position: absolute;
+            bottom: 0;
+            left: -5%;
+            width: 110%;
+            height: 120px;
+            background:
+                radial-gradient(
+                    ellipse at center,
+                    rgba(34,211,238,.15),
+                    transparent 70%
+                );
+            border-radius: 50%;
+            animation: waveMove 7s ease-in-out infinite;
+        }
+
+        @keyframes waveMove {
+            0%,100% {
+                transform: translateX(0);
+            }
+
+            50% {
+                transform: translateX(-50px);
+            }
+        }
+
+        .ship-shadow {
+            filter: drop-shadow(0 15px 30px rgba(0,0,0,.6));
+        }
+
+        .scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+
         ::-webkit-scrollbar {
             width: 8px;
         }
 
         ::-webkit-scrollbar-track {
-            background: #e2e8f0;
-        }
-
-        .dark ::-webkit-scrollbar-track {
-            background: #07111f;
+            background: #020617;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #06b6d4;
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
             background: #0891b2;
+            border-radius: 20px;
         }
 
-        /* Section line */
-        .section-line {
-            width: 70px;
-            height: 3px;
-            background: linear-gradient(90deg, #06b6d4, #38bdf8);
-            margin: auto;
-            border-radius: 10px;
-        }
-
-        /* Drone scan */
-        .scan-line {
-            position: absolute;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: rgba(34,211,238,.5);
-            box-shadow: 0 0 15px #22d3ee;
-            animation: scan 4s linear infinite;
-        }
-
-        @keyframes scan {
-            0% {
-                top: 0;
-                opacity: 0;
-            }
-
-            10% {
-                opacity: 1;
-            }
-
-            90% {
-                opacity: 1;
-            }
-
-            100% {
-                top: 100%;
-                opacity: 0;
-            }
-        }
-
-        @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .drone-shadow {
-            filter: drop-shadow(0 20px 25px rgba(6,182,212,.25));
+        .timeline-line {
+            background: linear-gradient(
+                to bottom,
+                transparent,
+                #06b6d4,
+                #38bdf8,
+                transparent
+            );
         }
 
     </style>
 </head>
 
 
-<body class="bg-slate-50 text-slate-800 dark:bg-[#050b14] dark:text-slate-100 antialiased">
+<body class="text-slate-100 antialiased">
 
-    <!-- Background Glows -->
-    <div class="glow-bg w-96 h-96 bg-drone-500 top-0 left-0"></div>
-    <div class="glow-bg w-96 h-96 bg-electric top-1/3 right-0"></div>
-    <div class="glow-bg w-96 h-96 bg-cyan-400 bottom-0 left-1/3"></div>
+<!-- ========================================================= -->
+<!-- NAVIGATION -->
+<!-- ========================================================= -->
 
+<header class="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-4">
 
-    <!-- ================= NAVBAR ================= -->
+    <nav
+        class="max-w-7xl mx-auto glass rounded-2xl px-5 sm:px-7 py-3 flex items-center justify-between shadow-2xl"
+    >
 
-    <header class="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-4">
+        <!-- LOGO -->
 
-        <nav class="max-w-7xl mx-auto glass rounded-2xl px-6 py-3.5
-                    flex items-center justify-between shadow-xl">
+        <a
+            href="#home"
+            class="flex items-center gap-3"
+        >
 
-            <!-- Logo -->
-            <a href="#hero" class="flex items-center gap-3 group">
+            <div
+                class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20"
+            >
+                <i class="fa-solid fa-drone text-lg"></i>
+            </div>
 
-                <div class="w-10 h-10 rounded-xl
-                            bg-gradient-to-br from-drone-500 to-electric
-                            text-white flex items-center justify-center
-                            shadow-lg shadow-cyan-500/30
-                            group-hover:scale-110 transition">
+            <div>
 
-                    <i class="fa-solid fa-drone text-lg"></i>
-
+                <div class="font-black tracking-tight text-lg">
+                    KAVEARASU
                 </div>
 
-                <div>
-                    <span class="font-extrabold text-lg tracking-tight">
-                        Kavearassu K
-                    </span>
-
-                    <span class="block text-[9px] uppercase tracking-[3px]
-                                 text-drone-500">
-                        Drone Technology
-                    </span>
+                <div class="text-[9px] uppercase tracking-[.3em] text-cyan-400">
+                    Aerospace • Ocean • UAV
                 </div>
 
+            </div>
+
+        </a>
+
+
+        <!-- DESKTOP NAV -->
+
+        <div
+            class="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-300"
+        >
+
+            <a href="#home" class="hover:text-cyan-400 transition">
+                Home
             </a>
 
+            <a href="#about" class="hover:text-cyan-400 transition">
+                About
+            </a>
 
-            <!-- Desktop Navigation -->
+            <a href="#drone" class="hover:text-cyan-400 transition">
+                Drone Tech
+            </a>
 
-            <div class="hidden md:flex items-center gap-7
-                        text-sm font-medium
-                        text-slate-600 dark:text-slate-300">
+            <a href="#titanic" class="hover:text-cyan-400 transition">
+                Titanic
+            </a>
 
-                <a href="#about"
-                   class="hover:text-drone-500 transition">
-                    About
-                </a>
+            <a href="#projects" class="hover:text-cyan-400 transition">
+                Projects
+            </a>
 
-                <a href="#skills"
-                   class="hover:text-drone-500 transition">
-                    Skills
-                </a>
-
-                <a href="#projects"
-                   class="hover:text-drone-500 transition">
-                    Projects
-                </a>
-
-                <a href="#experience"
-                   class="hover:text-drone-500 transition">
-                    Journey
-                </a>
-
-                <a href="#contact"
-                   class="hover:text-drone-500 transition">
-                    Contact
-                </a>
-
-            </div>
-
-
-            <!-- Controls -->
-
-            <div class="flex items-center gap-3">
-
-                <!-- Theme -->
-                <button id="theme-toggle"
-                        class="p-2.5 rounded-xl glass-card
-                               hover:bg-drone-500/10 transition">
-
-                    <i id="dark-icon"
-                       class="fa-solid fa-moon"></i>
-
-                    <i id="light-icon"
-                       class="fa-solid fa-sun hidden"></i>
-
-                </button>
-
-
-                <!-- Contact -->
-                <a href="#contact"
-                   class="hidden sm:flex items-center gap-2
-                          px-5 py-2.5 rounded-xl
-                          bg-gradient-to-r from-drone-600 to-electric
-                          text-white font-semibold text-sm
-                          shadow-lg shadow-cyan-500/20
-                          hover:-translate-y-1 transition">
-
-                    Let's Connect
-
-                    <i class="fa-solid fa-arrow-right text-xs"></i>
-
-                </a>
-
-
-                <!-- Mobile -->
-
-                <button id="mobile-menu-btn"
-                        class="md:hidden p-2.5 rounded-xl glass-card">
-
-                    <i class="fa-solid fa-bars"></i>
-
-                </button>
-
-            </div>
-
-        </nav>
-
-
-        <!-- Mobile Menu -->
-
-        <div id="mobile-menu"
-             class="hidden md:hidden max-w-7xl mx-auto mt-2
-                    glass rounded-2xl p-6 shadow-xl">
-
-            <div class="flex flex-col gap-4">
-
-                <a href="#about" class="mobile-link">About</a>
-                <a href="#skills" class="mobile-link">Skills</a>
-                <a href="#projects" class="mobile-link">Projects</a>
-                <a href="#experience" class="mobile-link">Journey</a>
-                <a href="#contact" class="mobile-link">Contact</a>
-
-            </div>
+            <a href="#contact" class="hover:text-cyan-400 transition">
+                Contact
+            </a>
 
         </div>
 
-    </header>
+
+        <!-- ACTIONS -->
+
+        <div class="flex items-center gap-3">
+
+            <button
+                id="themeToggle"
+                class="w-10 h-10 rounded-xl glass flex items-center justify-center hover:text-cyan-400 transition"
+            >
+                <i class="fa-solid fa-sun"></i>
+            </button>
+
+            <a
+                href="#contact"
+                class="hidden sm:flex px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm transition"
+            >
+                Let's Connect
+            </a>
+
+            <button
+                id="menuBtn"
+                class="lg:hidden w-10 h-10 rounded-xl glass"
+            >
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+        </div>
+
+    </nav>
 
 
+    <!-- MOBILE MENU -->
 
-    <!-- ================= HERO ================= -->
+    <div
+        id="mobileMenu"
+        class="hidden lg:hidden max-w-7xl mx-auto mt-2 glass rounded-2xl p-5"
+    >
 
-    <section id="hero"
-             class="relative min-h-screen flex items-center
-                    overflow-hidden tech-grid pt-32 pb-20">
+        <div class="flex flex-col gap-4 font-medium">
 
-        <div class="max-w-7xl mx-auto px-5 sm:px-8 w-full relative z-10">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#drone">Drone Technology</a>
+            <a href="#titanic">Titanic & Ocean</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12
-                        gap-14 items-center">
+        </div>
 
+    </div>
 
-                <!-- Hero Text -->
-
-                <div class="lg:col-span-7 space-y-7">
-
-                    <!-- Badge -->
-
-                    <div class="inline-flex items-center gap-3
-                                px-4 py-2 rounded-full glass-card
-                                border border-drone-500/30
-                                text-xs font-bold text-drone-600
-                                dark:text-drone-300">
-
-                        <span class="relative flex h-2.5 w-2.5">
-
-                            <span class="animate-ping absolute
-                                         inline-flex h-full w-full
-                                         rounded-full bg-cyan-400
-                                         opacity-75"></span>
-
-                            <span class="relative inline-flex
-                                         rounded-full h-2.5 w-2.5
-                                         bg-cyan-400"></span>
-
-                        </span>
-
-                        UAV • DRONE • MECHANICAL DESIGN
-
-                    </div>
+</header>
 
 
-                    <!-- Heading -->
+<!-- ========================================================= -->
+<!-- HERO -->
+<!-- ========================================================= -->
 
-                    <h1 class="text-5xl sm:text-6xl lg:text-7xl
-                               font-black tracking-tight leading-[.95]">
+<section
+    id="home"
+    class="min-h-screen relative overflow-hidden flex items-center pt-32"
+>
 
-                        Engineering the
+    <!-- GRID -->
 
-                        <br>
-
-                        <span class="bg-gradient-to-r
-                                     from-drone-400
-                                     via-electric
-                                     to-cyan-300
-                                     bg-clip-text text-transparent
-                                     animate-gradient-x">
-
-                            Future of Flight
-
-                        </span>
-
-                    </h1>
+    <div class="absolute inset-0 ocean-grid opacity-60"></div>
 
 
-                    <!-- Description -->
+    <!-- GLOW -->
 
-                    <p class="text-lg sm:text-xl
-                              text-slate-600 dark:text-slate-400
-                              max-w-2xl leading-relaxed">
+    <div
+        class="absolute top-20 left-10 w-96 h-96 bg-cyan-500/10 rounded-full blur-[120px]"
+    ></div>
 
-                        I'm <strong class="text-slate-900
-                        dark:text-white">Kavearassu K</strong>,
-                        a Mechanical Engineering enthusiast passionate
-                        about <strong>drone technology, UAV design,
-                        CAD modelling and innovative engineering
-                        solutions.</strong>
-
-                    </p>
+    <div
+        class="absolute bottom-10 right-10 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px]"
+    ></div>
 
 
-                    <!-- Buttons -->
+    <div
+        class="max-w-7xl mx-auto px-5 sm:px-8 w-full relative z-10"
+    >
 
-                    <div class="flex flex-wrap gap-4">
+        <div
+            class="grid lg:grid-cols-2 gap-16 items-center"
+        >
 
-                        <a href="#projects"
-                           class="px-7 py-3.5 rounded-xl
-                                  bg-gradient-to-r from-drone-600
-                                  to-electric
-                                  text-white font-bold
-                                  shadow-xl shadow-cyan-500/20
-                                  hover:-translate-y-1 transition">
+            <!-- LEFT -->
 
-                            Explore My Projects
+            <div>
 
-                            <i class="fa-solid fa-arrow-down ml-2"></i>
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass neon-border mb-7"
+                >
 
-                        </a>
+                    <span
+                        class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"
+                    ></span>
 
-
-                        <a href="#contact"
-                           class="px-7 py-3.5 rounded-xl
-                                  glass-card font-bold
-                                  hover:border-drone-500
-                                  transition">
-
-                            Contact Me
-
-                        </a>
-
-                    </div>
-
-
-                    <!-- Social -->
-
-                    <div class="flex items-center gap-6 pt-4">
-
-                        <span class="text-xs uppercase
-                                     tracking-[3px]
-                                     text-slate-400">
-
-                            Connect
-
-                        </span>
-
-                        <a href="#"
-                           class="text-xl hover:text-drone-500 transition">
-                            <i class="fa-brands fa-linkedin"></i>
-                        </a>
-
-                        <a href="#"
-                           class="text-xl hover:text-drone-500 transition">
-                            <i class="fa-brands fa-github"></i>
-                        </a>
-
-                        <a href="#"
-                           class="text-xl hover:text-drone-500 transition">
-                            <i class="fa-brands fa-instagram"></i>
-                        </a>
-
-                    </div>
+                    <span class="text-xs font-bold tracking-wider text-cyan-300">
+                        EXPLORING THE FUTURE
+                    </span>
 
                 </div>
 
 
-                <!-- Drone Visual -->
-
-                <div class="lg:col-span-5 flex justify-center">
-
-                    <div class="relative w-80 h-80 sm:w-[430px] sm:h-[430px]">
-
-
-                        <!-- Glow -->
-
-                        <div class="absolute inset-8 rounded-full
-                                    bg-drone-500/20 blur-3xl
-                                    animate-pulse-slow"></div>
-
-
-                        <!-- Radar -->
-
-                        <div class="absolute inset-4 rounded-full
-                                    border border-drone-500/20
-                                    animate-spin-slow"></div>
-
-                        <div class="absolute inset-14 rounded-full
-                                    border border-cyan-400/20"></div>
-
-
-                        <!-- Main Drone Card -->
-
-                        <div class="absolute inset-10
-                                    rounded-3xl glass
-                                    flex items-center justify-center
-                                    overflow-hidden
-                                    drone-shadow
-                                    animate-drone-float">
-
-                            <div class="scan-line"></div>
-
-
-                            <!-- Drone Illustration -->
-
-                            <div class="relative w-64 h-52">
-
-                                <!-- Body -->
-
-                                <div class="absolute
-                                            left-1/2 top-1/2
-                                            -translate-x-1/2
-                                            -translate-y-1/2
-                                            w-28 h-16
-                                            bg-gradient-to-br
-                                            from-slate-700
-                                            to-slate-900
-                                            dark:from-slate-500
-                                            dark:to-slate-800
-                                            rounded-[45%]
-                                            border-2 border-drone-400
-                                            shadow-xl shadow-cyan-500/30">
-
-                                    <div class="absolute
-                                                left-1/2 top-1/2
-                                                -translate-x-1/2
-                                                -translate-y-1/2
-                                                w-7 h-7 rounded-full
-                                                bg-cyan-400
-                                                shadow-[0_0_25px_#22d3ee]">
-                                    </div>
-
-                                </div>
-
-
-                                <!-- Left Arm -->
-
-                                <div class="absolute
-                                            left-3 top-1/2
-                                            w-24 h-2
-                                            bg-slate-700
-                                            dark:bg-slate-400
-                                            -rotate-12
-                                            origin-right">
-                                </div>
-
-
-                                <!-- Right Arm -->
-
-                                <div class="absolute
-                                            right-3 top-1/2
-                                            w-24 h-2
-                                            bg-slate-700
-                                            dark:bg-slate-400
-                                            rotate-12
-                                            origin-left">
-                                </div>
-
-
-                                <!-- Rotors -->
-
-                                <div class="absolute left-0 top-5
-                                            w-16 h-16
-                                            border-2 border-dashed
-                                            border-cyan-400
-                                            rounded-full rotor">
-
-                                    <div class="absolute
-                                                top-1/2 left-0
-                                                w-full h-0.5
-                                                bg-cyan-400/70"></div>
-
-                                </div>
-
-
-                                <div class="absolute right-0 top-5
-                                            w-16 h-16
-                                            border-2 border-dashed
-                                            border-cyan-400
-                                            rounded-full rotor">
-
-                                    <div class="absolute
-                                                top-1/2 left-0
-                                                w-full h-0.5
-                                                bg-cyan-400/70"></div>
-
-                                </div>
-
-
-                                <!-- Camera -->
-
-                                <div class="absolute
-                                            left-1/2 bottom-5
-                                            -translate-x-1/2
-                                            w-12 h-9
-                                            bg-slate-800
-                                            rounded-lg
-                                            border border-drone-400">
-
-                                    <div class="w-4 h-4
-                                                bg-cyan-400
-                                                rounded-full
-                                                mx-auto mt-2
-                                                shadow-[0_0_12px_#22d3ee]">
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                        <!-- Floating Badge -->
-
-                        <div class="absolute top-8 right-0
-                                    glass px-4 py-3 rounded-xl
-                                    shadow-xl animate-float">
-
-                            <div class="flex items-center gap-3">
-
-                                <div class="w-9 h-9 rounded-lg
-                                            bg-cyan-500/10
-                                            text-cyan-500
-                                            flex items-center justify-center">
-
-                                    <i class="fa-solid fa-satellite-dish"></i>
-
-                                </div>
-
-                                <div>
-
-                                    <p class="text-[10px]
-                                              text-slate-500">
-                                        SYSTEM
-                                    </p>
-
-                                    <p class="text-xs font-bold">
-                                        UAV ACTIVE
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                        <!-- Second Badge -->
-
-                        <div class="absolute bottom-8 left-0
-                                    glass px-4 py-3 rounded-xl
-                                    shadow-xl animate-float"
-                             style="animation-delay:2s">
-
-                            <div class="flex items-center gap-3">
-
-                                <div class="w-9 h-9 rounded-lg
-                                            bg-drone-500/10
-                                            text-drone-500
-                                            flex items-center justify-center">
-
-                                    <i class="fa-solid fa-compass"></i>
-
-                                </div>
-
-                                <div>
-
-                                    <p class="text-[10px]
-                                              text-slate-500">
-                                        DESIGN
-                                    </p>
-
-                                    <p class="text-xs font-bold">
-                                        CAD / UAV
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- ================= ABOUT ================= -->
-
-    <section id="about" class="py-24 relative z-10">
-
-        <div class="max-w-7xl mx-auto px-5 sm:px-8">
-
-            <div class="text-center max-w-3xl mx-auto mb-16">
-
-                <p class="text-xs font-bold uppercase
-                          tracking-[4px] text-drone-500 mb-4">
-                    About Me
+                <p
+                    class="text-cyan-400 font-bold tracking-[.35em] text-xs uppercase mb-4"
+                >
+                    Mechanical Engineering • UAV • Ocean Technology
                 </p>
 
-                <h2 class="text-3xl sm:text-4xl
-                           font-black">
-                    Mechanical Engineering meets
-                    <span class="text-drone-500">
-                        Drone Innovation.
+
+                <h1
+                    class="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight leading-[.9]"
+                >
+
+                    KAVEARASU
+
+                    <br>
+
+                    <span class="gradient-text">
+                        Drone
+                    </span>
+
+                    <br>
+
+                    <span class="text-white">
+                        Technology.
+                    </span>
+
+                </h1>
+
+
+                <p
+                    class="mt-8 text-lg text-slate-400 leading-relaxed max-w-xl"
+                >
+
+                    Mechanical engineering enthusiast passionate about
+                    <strong class="text-cyan-300">
+                        drone design, UAV systems, CAD engineering,
+                        ocean exploration and advanced mechanical systems.
+                    </strong>
+
+                </p>
+
+
+                <!-- BUTTONS -->
+
+                <div class="mt-9 flex flex-wrap gap-4">
+
+                    <a
+                        href="#projects"
+                        class="px-7 py-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black transition shadow-lg shadow-cyan-500/20"
+                    >
+
+                        <i class="fa-solid fa-rocket mr-2"></i>
+
+                        Explore Projects
+
+                    </a>
+
+
+                    <a
+                        href="#titanic"
+                        class="px-7 py-4 rounded-xl glass hover:bg-cyan-500/10 font-bold transition"
+                    >
+
+                        <i class="fa-solid fa-ship mr-2 text-cyan-400"></i>
+
+                        Explore Ocean
+
+                    </a>
+
+                </div>
+
+
+                <!-- SOCIAL -->
+
+                <div class="mt-10 flex items-center gap-5">
+
+                    <span class="text-xs text-slate-500 uppercase tracking-widest">
+                        Connect
+                    </span>
+
+                    <a
+                        href="#"
+                        class="text-xl hover:text-cyan-400 transition"
+                    >
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+
+                    <a
+                        href="#"
+                        class="text-xl hover:text-cyan-400 transition"
+                    >
+                        <i class="fa-brands fa-linkedin"></i>
+                    </a>
+
+                    <a
+                        href="#"
+                        class="text-xl hover:text-cyan-400 transition"
+                    >
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT VISUAL -->
+
+            <div class="relative flex justify-center">
+
+                <!-- SONAR -->
+
+                <div class="absolute w-96 h-96 sonar-circle"></div>
+                <div
+                    class="absolute w-96 h-96 sonar-circle"
+                    style="animation-delay:2s"
+                ></div>
+
+
+                <div
+                    class="relative w-[320px] h-[420px] sm:w-[420px] sm:h-[500px] rounded-[40px] glass neon-border overflow-hidden animate-float"
+                >
+
+                    <!-- image -->
+
+                    <img
+                        src="https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=900&q=85"
+                        class="absolute inset-0 w-full h-full object-cover opacity-75"
+                        alt="Drone Technology"
+                    >
+
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-cyan-900/20"
+                    ></div>
+
+
+                    <!-- HUD -->
+
+                    <div
+                        class="absolute top-5 left-5 right-5 flex justify-between text-[10px] font-bold tracking-widest"
+                    >
+
+                        <span class="text-cyan-300">
+                            UAV-01
+                        </span>
+
+                        <span class="text-emerald-400">
+                            ● ONLINE
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="absolute bottom-7 left-7 right-7"
+                    >
+
+                        <div class="text-xs text-cyan-300 mb-2">
+                            AUTONOMOUS AERIAL SYSTEM
+                        </div>
+
+                        <h2 class="text-3xl font-black">
+                            SKY
+                            <span class="text-cyan-400">
+                                EXPLORER
+                            </span>
+                        </h2>
+
+
+                        <div class="grid grid-cols-3 gap-2 mt-5">
+
+                            <div class="glass rounded-lg p-2">
+                                <p class="text-[9px] text-slate-500">
+                                    ALT
+                                </p>
+
+                                <p class="font-bold text-sm">
+                                    120m
+                                </p>
+                            </div>
+
+                            <div class="glass rounded-lg p-2">
+                                <p class="text-[9px] text-slate-500">
+                                    SPEED
+                                </p>
+
+                                <p class="font-bold text-sm">
+                                    72km/h
+                                </p>
+                            </div>
+
+                            <div class="glass rounded-lg p-2">
+                                <p class="text-[9px] text-slate-500">
+                                    GPS
+                                </p>
+
+                                <p class="font-bold text-sm text-emerald-400">
+                                    LOCK
+                                </p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="wave-line"></div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- ABOUT -->
+<!-- ========================================================= -->
+
+<section id="about" class="py-28 relative">
+
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+
+        <div class="text-center max-w-3xl mx-auto mb-16">
+
+            <p class="text-cyan-400 text-xs font-bold tracking-[.3em] uppercase">
+                About Kavearasu
+            </p>
+
+            <h2 class="mt-4 text-4xl sm:text-5xl font-black">
+                Engineering beyond
+                <span class="gradient-text">
+                    boundaries.
+                </span>
+            </h2>
+
+            <p class="mt-5 text-slate-400 leading-relaxed">
+                Combining mechanical engineering fundamentals with
+                emerging technologies to create intelligent machines
+                capable of exploring the sky and the ocean.
+            </p>
+
+        </div>
+
+
+        <div class="grid lg:grid-cols-2 gap-10">
+
+            <!-- ABOUT CARD -->
+
+            <div class="glass rounded-3xl p-8 neon-border">
+
+                <div
+                    class="w-14 h-14 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-2xl mb-6"
+                >
+
+                    <i class="fa-solid fa-gears"></i>
+
+                </div>
+
+                <h3 class="text-2xl font-black mb-5">
+                    Mechanical Engineering
+                </h3>
+
+                <p class="text-slate-400 leading-relaxed">
+
+                    My interests combine mechanical design, CAD modelling,
+                    manufacturing, automation and unmanned systems.
+
+                    I am especially interested in designing structures
+                    that are lightweight, strong and optimized for
+                    real-world applications.
+
+                </p>
+
+
+                <div class="grid grid-cols-2 gap-4 mt-8">
+
+                    <div class="glass rounded-xl p-5">
+                        <div class="text-3xl font-black text-cyan-400">
+                            CAD
+                        </div>
+
+                        <div class="text-xs text-slate-500 mt-1">
+                            Design & Modelling
+                        </div>
+                    </div>
+
+                    <div class="glass rounded-xl p-5">
+                        <div class="text-3xl font-black text-cyan-400">
+                            UAV
+                        </div>
+
+                        <div class="text-xs text-slate-500 mt-1">
+                            Drone Systems
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- VISION CARD -->
+
+            <div
+                class="rounded-3xl overflow-hidden relative min-h-[350px] glass"
+            >
+
+                <img
+                    src="https://images.unsplash.com/photo-1559825481-12a05cc00344?auto=format&fit=crop&w=1200&q=85"
+                    class="absolute inset-0 w-full h-full object-cover opacity-60"
+                    alt="Ocean exploration"
+                >
+
+                <div
+                    class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"
+                ></div>
+
+
+                <div
+                    class="absolute bottom-8 left-8 right-8"
+                >
+
+                    <div class="text-cyan-300 text-xs font-bold tracking-widest mb-2">
+                        MY VISION
+                    </div>
+
+                    <h3 class="text-3xl font-black">
+                        From the
+                        <span class="text-cyan-400">
+                            Sky
+                        </span>
+                        to the
+                        <span class="text-blue-400">
+                            Deep Ocean.
+                        </span>
+                    </h3>
+
+                    <p class="text-sm text-slate-300 mt-3">
+                        Exploring how drones, robotics and mechanical
+                        engineering can transform the way we understand
+                        our world.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- DRONE TECHNOLOGY -->
+<!-- ========================================================= -->
+
+<section
+    id="drone"
+    class="py-28 bg-slate-950/70 relative overflow-hidden"
+>
+
+    <div class="absolute inset-0 ocean-grid opacity-40"></div>
+
+
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 relative z-10">
+
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+            <!-- IMAGE -->
+
+            <div class="relative">
+
+                <div
+                    class="absolute -inset-5 bg-cyan-500/10 blur-3xl rounded-full"
+                ></div>
+
+                <div class="glass rounded-3xl overflow-hidden neon-border">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?auto=format&fit=crop&w=1200&q=85"
+                        class="w-full h-[450px] object-cover"
+                        alt="Drone"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- CONTENT -->
+
+            <div>
+
+                <p class="text-cyan-400 text-xs font-bold tracking-[.3em] uppercase">
+                    Drone Technology
+                </p>
+
+                <h2 class="text-4xl sm:text-5xl font-black mt-4">
+                    Designing the
+                    <span class="gradient-text">
+                        future of flight.
                     </span>
                 </h2>
 
-                <div class="section-line mt-6"></div>
-
-            </div>
-
-
-            <div class="grid grid-cols-1 lg:grid-cols-12
-                        gap-12 items-center">
-
-                <!-- About Text -->
-
-                <div class="lg:col-span-7 space-y-6">
-
-                    <h3 class="text-2xl font-bold">
-                        Designing the machines that will shape
-                        tomorrow's skies.
-                    </h3>
-
-                    <p class="text-slate-600 dark:text-slate-400
-                              leading-relaxed">
-
-                        I am Kavearassu K, a Mechanical Engineering
-                        student interested in drone technology,
-                        product design and engineering innovation.
-
-                    </p>
-
-                    <p class="text-slate-600 dark:text-slate-400
-                              leading-relaxed">
-
-                        My interests include CAD modelling,
-                        mechanical design, UAV structures,
-                        aerodynamics and developing practical
-                        engineering solutions.
-
-                    </p>
-
-
-                    <!-- Stats -->
-
-                    <div class="grid grid-cols-3 gap-4 pt-5">
-
-                        <div class="glass-card rounded-2xl p-5 text-center">
-
-                            <span class="block text-3xl
-                                         font-black text-drone-500">
-                                CAD
-                            </span>
-
-                            <span class="text-xs
-                                         text-slate-500">
-                                Design
-                            </span>
-
-                        </div>
-
-                        <div class="glass-card rounded-2xl p-5 text-center">
-
-                            <span class="block text-3xl
-                                         font-black text-electric">
-                                UAV
-                            </span>
-
-                            <span class="text-xs
-                                         text-slate-500">
-                                Technology
-                            </span>
-
-                        </div>
-
-                        <div class="glass-card rounded-2xl p-5 text-center">
-
-                            <span class="block text-3xl
-                                         font-black text-cyan-400">
-                                ME
-                            </span>
-
-                            <span class="text-xs
-                                         text-slate-500">
-                                Engineering
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Details -->
-
-                <div class="lg:col-span-5">
-
-                    <div class="glass-card rounded-3xl p-8">
-
-                        <h3 class="text-xl font-bold
-                                   border-b border-slate-200
-                                   dark:border-slate-800
-                                   pb-4 mb-6">
-
-                            Engineering Profile
-
-                        </h3>
-
-
-                        <div class="space-y-5 text-sm">
-
-                            <div class="flex justify-between gap-5">
-
-                                <span class="text-slate-500">
-                                    Name
-                                </span>
-
-                                <span class="font-bold">
-                                    Kavearassu K
-                                </span>
-
-                            </div>
-
-
-                            <div class="flex justify-between gap-5">
-
-                                <span class="text-slate-500">
-                                    Field
-                                </span>
-
-                                <span class="font-bold text-right">
-                                    Mechanical Engineering
-                                </span>
-
-                            </div>
-
-
-                            <div class="flex justify-between gap-5">
-
-                                <span class="text-slate-500">
-                                    Specialization
-                                </span>
-
-                                <span class="font-bold text-right">
-                                    Drone & UAV Technology
-                                </span>
-
-                            </div>
-
-
-                            <div class="flex justify-between gap-5">
-
-                                <span class="text-slate-500">
-                                    Design Tools
-                                </span>
-
-                                <span class="font-bold text-right">
-                                    Creo • SolidWorks • AutoCAD
-                                </span>
-
-                            </div>
-
-
-                            <div class="flex justify-between gap-5">
-
-                                <span class="text-slate-500">
-                                    Location
-                                </span>
-
-                                <span class="font-bold">
-                                    Tamil Nadu, India
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- ================= SKILLS ================= -->
-
-    <section id="skills"
-             class="py-24 bg-slate-100/50
-                    dark:bg-slate-900/30 relative z-10">
-
-        <div class="max-w-7xl mx-auto px-5 sm:px-8">
-
-            <div class="text-center max-w-3xl mx-auto mb-16">
-
-                <p class="text-xs font-bold uppercase
-                          tracking-[4px] text-drone-500 mb-4">
-                    Technical Skills
+                <p class="text-slate-400 mt-6 leading-relaxed">
+                    UAV technology combines mechanical design,
+                    electronics, control systems, sensors and software.
+                    My goal is to understand every layer of the system.
                 </p>
 
-                <h2 class="text-3xl sm:text-4xl font-black">
-                    Tools & Technologies
-                </h2>
 
-                <div class="section-line mt-6"></div>
+                <!-- SKILLS -->
 
-            </div>
+                <div class="grid sm:grid-cols-2 gap-4 mt-8">
 
+                    <div class="glass rounded-xl p-5 hover:border-cyan-400/40 transition">
 
-            <div class="grid grid-cols-1 md:grid-cols-2
-                        lg:grid-cols-3 gap-8">
+                        <i class="fa-solid fa-helicopter text-cyan-400 text-xl"></i>
 
-
-                <!-- CAD -->
-
-                <div class="glass-card p-7 rounded-3xl
-                            hover:-translate-y-2
-                            hover:border-drone-500/40
-                            transition-all">
-
-                    <div class="w-14 h-14 rounded-2xl
-                                bg-drone-500/10
-                                text-drone-500
-                                flex items-center justify-center
-                                text-2xl mb-6">
-
-                        <i class="fa-solid fa-cube"></i>
-
-                    </div>
-
-                    <h3 class="text-xl font-bold mb-5">
-                        CAD & Product Design
-                    </h3>
-
-
-                    <div class="space-y-5">
-
-                        <div>
-
-                            <div class="flex justify-between
-                                        text-xs font-semibold mb-2">
-
-                                <span>Creo</span>
-                                <span>85%</span>
-
-                            </div>
-
-                            <div class="h-2 bg-slate-200
-                                        dark:bg-slate-800 rounded-full">
-
-                                <div class="h-2 rounded-full
-                                            bg-drone-500"
-                                     style="width:85%">
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                        <div>
-
-                            <div class="flex justify-between
-                                        text-xs font-semibold mb-2">
-
-                                <span>SolidWorks</span>
-                                <span>85%</span>
-
-                            </div>
-
-                            <div class="h-2 bg-slate-200
-                                        dark:bg-slate-800 rounded-full">
-
-                                <div class="h-2 rounded-full
-                                            bg-drone-500"
-                                     style="width:85%">
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                        <div>
-
-                            <div class="flex justify-between
-                                        text-xs font-semibold mb-2">
-
-                                <span>AutoCAD</span>
-                                <span>80%</span>
-
-                            </div>
-
-                            <div class="h-2 bg-slate-200
-                                        dark:bg-slate-800 rounded-full">
-
-                                <div class="h-2 rounded-full
-                                            bg-drone-500"
-                                     style="width:80%">
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Drone -->
-
-                <div class="glass-card p-7 rounded-3xl
-                            hover:-translate-y-2
-                            hover:border-cyan-400/40
-                            transition-all">
-
-                    <div class="w-14 h-14 rounded-2xl
-                                bg-cyan-500/10
-                                text-cyan-500
-                                flex items-center justify-center
-                                text-2xl mb-6">
-
-                        <i class="fa-solid fa-drone"></i>
-
-                    </div>
-
-                    <h3 class="text-xl font-bold mb-5">
-                        Drone Technology
-                    </h3>
-
-
-                    <div class="space-y-4">
-
-                        <span class="inline-block px-4 py-2
-                                     rounded-xl bg-cyan-500/10
-                                     text-cyan-500 text-sm font-semibold">
+                        <h3 class="font-bold mt-3">
                             UAV Design
-                        </span>
+                        </h3>
 
-                        <span class="inline-block px-4 py-2
-                                     rounded-xl bg-cyan-500/10
-                                     text-cyan-500 text-sm font-semibold">
-                            Drone Structures
-                        </span>
+                        <p class="text-xs text-slate-500 mt-2">
+                            Frame design, weight optimization and
+                            mechanical integration.
+                        </p>
 
-                        <span class="inline-block px-4 py-2
-                                     rounded-xl bg-cyan-500/10
-                                     text-cyan-500 text-sm font-semibold">
-                            Propulsion Systems
-                        </span>
+                    </div>
 
-                        <span class="inline-block px-4 py-2
-                                     rounded-xl bg-cyan-500/10
-                                     text-cyan-500 text-sm font-semibold">
-                            Aerodynamics
-                        </span>
 
-                        <span class="inline-block px-4 py-2
-                                     rounded-xl bg-cyan-500/10
-                                     text-cyan-500 text-sm font-semibold">
-                            Flight Concepts
-                        </span>
+                    <div class="glass rounded-xl p-5">
+
+                        <i class="fa-solid fa-compass-drafting text-cyan-400 text-xl"></i>
+
+                        <h3 class="font-bold mt-3">
+                            CAD Modelling
+                        </h3>
+
+                        <p class="text-xs text-slate-500 mt-2">
+                            Creo, SolidWorks and engineering drawings.
+                        </p>
+
+                    </div>
+
+
+                    <div class="glass rounded-xl p-5">
+
+                        <i class="fa-solid fa-microchip text-cyan-400 text-xl"></i>
+
+                        <h3 class="font-bold mt-3">
+                            Embedded Systems
+                        </h3>
+
+                        <p class="text-xs text-slate-500 mt-2">
+                            Sensors, controllers and autonomous systems.
+                        </p>
+
+                    </div>
+
+
+                    <div class="glass rounded-xl p-5">
+
+                        <i class="fa-solid fa-satellite-dish text-cyan-400 text-xl"></i>
+
+                        <h3 class="font-bold mt-3">
+                            Navigation
+                        </h3>
+
+                        <p class="text-xs text-slate-500 mt-2">
+                            GPS, telemetry and intelligent navigation.
+                        </p>
 
                     </div>
 
                 </div>
 
+            </div>
 
-                <!-- Engineering -->
+        </div>
 
-                <div class="glass-card p-7 rounded-3xl
-                            hover:-translate-y-2
-                            hover:border-electric/40
-                            transition-all">
+    </div>
 
-                    <div class="w-14 h-14 rounded-2xl
-                                bg-sky-500/10
-                                text-sky-500
-                                flex items-center justify-center
-                                text-2xl mb-6">
+</section>
 
-                        <i class="fa-solid fa-gears"></i>
+
+<!-- ========================================================= -->
+<!-- DRONE DASHBOARD -->
+<!-- ========================================================= -->
+
+<section class="py-24">
+
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+
+        <div class="glass rounded-3xl p-6 sm:p-10 neon-border">
+
+            <div class="flex flex-col sm:flex-row justify-between gap-5 mb-8">
+
+                <div>
+
+                    <p class="text-cyan-400 text-xs font-bold tracking-widest">
+                        UAV CONTROL SYSTEM
+                    </p>
+
+                    <h2 class="text-2xl sm:text-3xl font-black mt-2">
+                        Drone Mission Dashboard
+                    </h2>
+
+                </div>
+
+
+                <div class="flex items-center gap-2 text-emerald-400 text-sm font-bold">
+
+                    <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
+
+                    SYSTEM ONLINE
+
+                </div>
+
+            </div>
+
+
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+
+                <div class="bg-slate-950/70 rounded-2xl p-5">
+
+                    <i class="fa-solid fa-gauge-high text-cyan-400"></i>
+
+                    <p class="text-xs text-slate-500 mt-4">
+                        SPEED
+                    </p>
+
+                    <p class="text-2xl font-black">
+                        72
+                        <span class="text-sm text-slate-500">
+                            km/h
+                        </span>
+                    </p>
+
+                </div>
+
+
+                <div class="bg-slate-950/70 rounded-2xl p-5">
+
+                    <i class="fa-solid fa-arrow-up text-cyan-400"></i>
+
+                    <p class="text-xs text-slate-500 mt-4">
+                        ALTITUDE
+                    </p>
+
+                    <p class="text-2xl font-black">
+                        120
+                        <span class="text-sm text-slate-500">
+                            m
+                        </span>
+                    </p>
+
+                </div>
+
+
+                <div class="bg-slate-950/70 rounded-2xl p-5">
+
+                    <i class="fa-solid fa-battery-three-quarters text-emerald-400"></i>
+
+                    <p class="text-xs text-slate-500 mt-4">
+                        BATTERY
+                    </p>
+
+                    <p class="text-2xl font-black">
+                        87%
+                    </p>
+
+                </div>
+
+
+                <div class="bg-slate-950/70 rounded-2xl p-5">
+
+                    <i class="fa-solid fa-satellite text-blue-400"></i>
+
+                    <p class="text-xs text-slate-500 mt-4">
+                        GPS
+                    </p>
+
+                    <p class="text-2xl font-black text-emerald-400">
+                        LOCKED
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- PROGRESS -->
+
+            <div class="mt-8">
+
+                <div class="flex justify-between text-xs mb-2">
+
+                    <span class="text-slate-400">
+                        Mission Progress
+                    </span>
+
+                    <span class="text-cyan-400">
+                        68%
+                    </span>
+
+                </div>
+
+                <div class="h-2 bg-slate-800 rounded-full overflow-hidden">
+
+                    <div
+                        class="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full"
+                        style="width:68%"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- TITANIC / OCEAN -->
+<!-- ========================================================= -->
+
+<section
+    id="titanic"
+    class="py-28 relative overflow-hidden"
+>
+
+    <div
+        class="absolute inset-0 bg-gradient-to-b from-blue-950/20 via-slate-950 to-black"
+    ></div>
+
+
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 relative z-10">
+
+        <div class="text-center max-w-4xl mx-auto mb-16">
+
+            <p class="text-cyan-400 text-xs font-bold tracking-[.35em] uppercase">
+                Ocean Exploration
+            </p>
+
+            <h2 class="text-4xl sm:text-6xl font-black mt-4">
+                The story of the
+                <span class="gradient-text">
+                    Titanic
+                </span>
+            </h2>
+
+            <p class="text-slate-400 mt-5 leading-relaxed">
+                A section dedicated to the engineering, history and
+                deep-ocean exploration surrounding RMS Titanic.
+            </p>
+
+        </div>
+
+
+        <!-- TITANIC CARD -->
+
+        <div
+            class="relative rounded-[35px] overflow-hidden min-h-[550px] glass neon-border"
+        >
+
+            <img
+                src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1800&q=85"
+                class="absolute inset-0 w-full h-full object-cover opacity-50"
+                alt="Deep Ocean"
+            >
+
+            <div
+                class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/70 to-transparent"
+            ></div>
+
+
+            <div
+                class="relative z-10 p-8 sm:p-14 max-w-2xl min-h-[550px] flex flex-col justify-center"
+            >
+
+                <div class="flex items-center gap-3 mb-5">
+
+                    <div
+                        class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-400/20 flex items-center justify-center"
+                    >
+                        <i class="fa-solid fa-ship text-cyan-400"></i>
+                    </div>
+
+                    <span class="text-xs tracking-widest text-cyan-300 font-bold">
+                        RMS TITANIC
+                    </span>
+
+                </div>
+
+
+                <h3 class="text-4xl sm:text-5xl font-black">
+                    A ship that became
+                    <span class="text-cyan-400">
+                        history.
+                    </span>
+                </h3>
+
+
+                <p class="text-slate-300 leading-relaxed mt-6">
+
+                    RMS Titanic was a British ocean liner operated by
+                    the White Star Line. The ship departed Southampton
+                    on April 10, 1912, on her maiden voyage to New York.
+
+                </p>
+
+
+                <p class="text-slate-400 leading-relaxed mt-4">
+
+                    Today, Titanic remains an important subject for
+                    maritime engineering, underwater archaeology,
+                    robotics and deep-sea exploration.
+
+                </p>
+
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8">
+
+                    <div class="glass rounded-xl p-4">
+
+                        <div class="text-xl font-black text-cyan-400">
+                            269m
+                        </div>
+
+                        <div class="text-[10px] text-slate-500">
+                            Length
+                        </div>
 
                     </div>
 
-                    <h3 class="text-xl font-bold mb-5">
-                        Engineering
+
+                    <div class="glass rounded-xl p-4">
+
+                        <div class="text-xl font-black text-cyan-400">
+                            46K+
+                        </div>
+
+                        <div class="text-[10px] text-slate-500">
+                            Gross tonnage
+                        </div>
+
+                    </div>
+
+
+                    <div class="glass rounded-xl p-4">
+
+                        <div class="text-xl font-black text-cyan-400">
+                            1912
+                        </div>
+
+                        <div class="text-[10px] text-slate-500">
+                            Maiden voyage
+                        </div>
+
+                    </div>
+
+
+                    <div class="glass rounded-xl p-4">
+
+                        <div class="text-xl font-black text-cyan-400">
+                            3.8km
+                        </div>
+
+                        <div class="text-[10px] text-slate-500">
+                            Approx. depth
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- OCEAN TECHNOLOGY -->
+
+        <div class="grid md:grid-cols-3 gap-6 mt-8">
+
+            <div class="glass rounded-2xl p-7">
+
+                <i class="fa-solid fa-water text-3xl text-cyan-400"></i>
+
+                <h3 class="text-xl font-black mt-5">
+                    Deep Sea Robotics
+                </h3>
+
+                <p class="text-sm text-slate-400 mt-3 leading-relaxed">
+                    ROVs and autonomous underwater vehicles can be
+                    used to inspect structures in environments that
+                    are difficult or dangerous for humans.
+                </p>
+
+            </div>
+
+
+            <div class="glass rounded-2xl p-7">
+
+                <i class="fa-solid fa-radar text-3xl text-cyan-400"></i>
+
+                <h3 class="text-xl font-black mt-5">
+                    Sonar Mapping
+                </h3>
+
+                <p class="text-sm text-slate-400 mt-3 leading-relaxed">
+                    Underwater mapping technologies help researchers
+                    understand seafloor terrain and locate submerged
+                    objects.
+                </p>
+
+            </div>
+
+
+            <div class="glass rounded-2xl p-7">
+
+                <i class="fa-solid fa-camera text-3xl text-cyan-400"></i>
+
+                <h3 class="text-xl font-black mt-5">
+                    Underwater Imaging
+                </h3>
+
+                <p class="text-sm text-slate-400 mt-3 leading-relaxed">
+                    Advanced cameras, lighting and imaging systems
+                    enable detailed documentation of underwater
+                    archaeological sites.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- SKILLS -->
+<!-- ========================================================= -->
+
+<section
+    id="skills"
+    class="py-28 bg-slate-950/80"
+>
+
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+
+        <div class="text-center mb-16">
+
+            <p class="text-cyan-400 text-xs font-bold tracking-[.3em]">
+                ENGINEERING TOOLKIT
+            </p>
+
+            <h2 class="text-4xl sm:text-5xl font-black mt-4">
+                Skills & Technologies
+            </h2>
+
+        </div>
+
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+
+            <!-- CAD -->
+
+            <div class="glass rounded-2xl p-7 hover:-translate-y-2 transition">
+
+                <div class="text-cyan-400 text-3xl">
+                    <i class="fa-solid fa-compass-drafting"></i>
+                </div>
+
+                <h3 class="text-xl font-black mt-5">
+                    CAD & Design
+                </h3>
+
+                <div class="flex flex-wrap gap-2 mt-5">
+
+                    <span class="px-3 py-2 bg-cyan-500/10 rounded-lg text-xs text-cyan-300">
+                        Creo
+                    </span>
+
+                    <span class="px-3 py-2 bg-cyan-500/10 rounded-lg text-xs text-cyan-300">
+                        SolidWorks
+                    </span>
+
+                    <span class="px-3 py-2 bg-cyan-500/10 rounded-lg text-xs text-cyan-300">
+                        AutoCAD
+                    </span>
+
+                    <span class="px-3 py-2 bg-cyan-500/10 rounded-lg text-xs text-cyan-300">
+                        3D Modelling
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- UAV -->
+
+            <div class="glass rounded-2xl p-7">
+
+                <div class="text-cyan-400 text-3xl">
+                    <i class="fa-solid fa-drone"></i>
+                </div>
+
+                <h3 class="text-xl font-black mt-5">
+                    UAV Technology
+                </h3>
+
+                <div class="flex flex-wrap gap-2 mt-5">
+
+                    <span class="px-3 py-2 bg-cyan-500/10 rounded-lg text-xs">
+                        Drone Design
+                    </span>
+
+                    <span class="px-3 py-2 bg-cyan-500/10 rounded-lg text-xs">
+                        Flight Systems
+                    </span>
+
+                    <span class="px-3 py-2 bg-cyan-500/10 rounded-lg text-xs">
+                        GPS
+                    </span>
+
+                    <span class="px-3 py-2 bg-cyan-500/10 rounded-lg text-xs">
+                        Sensors
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Mechanical -->
+
+            <div class="glass rounded-2xl p-7">
+
+                <div class="text-cyan-400 text-3xl">
+                    <i class="fa-solid fa-gears"></i>
+                </div>
+
+                <h3 class="text-xl font-black mt-5">
+                    Mechanical
+                </h3>
+
+                <div class="flex flex-wrap gap-2 mt-5">
+
+                    <span class="px-3 py-2 bg-cyan-500/10 rounded-lg text-xs">
+                        Manufacturing
+                    </span>
+
+                    <span class="px-3 py-2 bg-cyan-500/10 rounded-lg text-xs">
+                        Materials
+                    </span>
+
+                    <span class="px-3 py-2 bg-cyan-500/10 rounded-lg text-xs">
+                        Mechanics
+                    </span>
+
+                    <span class="px-3 py-2 bg-cyan-500/10 rounded-lg text-xs">
+                        Engineering Drawing
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Programming -->
+
+            <div class="glass rounded-2xl p-7">
+
+                <div class="text-cyan-400 text-3xl">
+                    <i class="fa-solid fa-code"></i>
+                </div>
+
+                <h3 class="text-xl font-black mt-5">
+                    Programming
+                </h3>
+
+                <div class="flex flex-wrap gap-2 mt-5">
+
+                    <span class="px-3 py-2 bg-cyan-500/10 rounded-lg text-xs">
+                        Python
+                    </span>
+
+                    <span class="px-3 py-2 bg-cyan-500/10 rounded-lg text-xs">
+                        Java
+                    </span>
+
+                    <span class="px-3 py-2 bg-cyan-500/10 rounded-lg text-xs">
+                        Flutter
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- AI -->
+
+            <div class="glass rounded-2xl p-7">
+
+                <div class="text-cyan-400 text-3xl">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+
+                <h3 class="text-xl font-black mt-5">
+                    AI & Computer Vision
+                </h3>
+
+                <div class="flex flex-wrap gap-2 mt-5">
+
+                    <span class="px-3 py-2 bg-cyan-500/10 rounded-lg text-xs">
+                        OpenCV
+                    </span>
+
+                    <span class="px-3 py-2 bg-cyan-500/10 rounded-lg text-xs">
+                        TensorFlow
+                    </span>
+
+                    <span class="px-3 py-2 bg-cyan-500/10 rounded-lg text-xs">
+                        Image Processing
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Ocean -->
+
+            <div class="glass rounded-2xl p-7">
+
+                <div class="text-cyan-400 text-3xl">
+                    <i class="fa-solid fa-water"></i>
+                </div>
+
+                <h3 class="text-xl font-black mt-5">
+                    Ocean Technology
+                </h3>
+
+                <div class="flex flex-wrap gap-2 mt-5">
+
+                    <span class="px-3 py-2 bg-cyan-500/10 rounded-lg text-xs">
+                        ROV
+                    </span>
+
+                    <span class="px-3 py-2 bg-cyan-500/10 rounded-lg text-xs">
+                        AUV
+                    </span>
+
+                    <span class="px-3 py-2 bg-cyan-500/10 rounded-lg text-xs">
+                        Sonar
+                    </span>
+
+                    <span class="px-3 py-2 bg-cyan-500/10 rounded-lg text-xs">
+                        Marine Robotics
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- PROJECTS -->
+<!-- ========================================================= -->
+
+<section id="projects" class="py-28">
+
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+
+        <div class="text-center mb-14">
+
+            <p class="text-cyan-400 text-xs font-bold tracking-[.3em]">
+                ENGINEERING PROJECTS
+            </p>
+
+            <h2 class="text-4xl sm:text-5xl font-black mt-4">
+                Projects from Sky to Sea
+            </h2>
+
+        </div>
+
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
+
+
+            <!-- PROJECT 1 -->
+
+            <div class="glass rounded-3xl overflow-hidden group">
+
+                <div class="h-56 overflow-hidden relative">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?auto=format&fit=crop&w=900&q=85"
+                        class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
+                        alt="Drone"
+                    >
+
+                    <div
+                        class="absolute top-4 left-4 px-3 py-1 rounded-full bg-cyan-500 text-slate-950 text-xs font-black"
+                    >
+                        UAV
+                    </div>
+
+                </div>
+
+
+                <div class="p-6">
+
+                    <h3 class="text-xl font-black">
+                        Autonomous Surveillance Drone
                     </h3>
 
+                    <p class="text-sm text-slate-400 mt-3 leading-relaxed">
+                        Concept UAV designed for autonomous aerial
+                        monitoring using GPS, sensors and camera systems.
+                    </p>
 
-                    <div class="space-y-4">
+                    <div class="mt-5 flex flex-wrap gap-2">
 
-                        <span class="inline-block px-4 py-2
-                                     rounded-xl bg-sky-500/10
-                                     text-sky-500 text-sm font-semibold">
-                            Mechanical Design
+                        <span class="text-xs text-cyan-300">
+                            CAD
                         </span>
 
-                        <span class="inline-block px-4 py-2
-                                     rounded-xl bg-sky-500/10
-                                     text-sky-500 text-sm font-semibold">
-                            3D Modelling
+                        <span class="text-xs text-cyan-300">
+                            GPS
                         </span>
 
-                        <span class="inline-block px-4 py-2
-                                     rounded-xl bg-sky-500/10
-                                     text-sky-500 text-sm font-semibold">
-                            Manufacturing
-                        </span>
-
-                        <span class="inline-block px-4 py-2
-                                     rounded-xl bg-sky-500/10
-                                     text-sky-500 text-sm font-semibold">
-                            Engineering Analysis
-                        </span>
-
-                        <span class="inline-block px-4 py-2
-                                     rounded-xl bg-sky-500/10
-                                     text-sky-500 text-sm font-semibold">
-                            Problem Solving
+                        <span class="text-xs text-cyan-300">
+                            AI
                         </span>
 
                     </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PROJECT 2 -->
+
+            <div class="glass rounded-3xl overflow-hidden group">
+
+                <div class="h-56 overflow-hidden relative">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1559825481-12a05cc00344?auto=format&fit=crop&w=900&q=85"
+                        class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
+                        alt="Ocean"
+                    >
+
+                    <div
+                        class="absolute top-4 left-4 px-3 py-1 rounded-full bg-blue-500 text-white text-xs font-black"
+                    >
+                        OCEAN
+                    </div>
+
+                </div>
+
+
+                <div class="p-6">
+
+                    <h3 class="text-xl font-black">
+                        Underwater Exploration ROV
+                    </h3>
+
+                    <p class="text-sm text-slate-400 mt-3 leading-relaxed">
+                        Concept remotely operated vehicle for underwater
+                        inspection, imaging and marine exploration.
+                    </p>
+
+                    <div class="mt-5 flex flex-wrap gap-2">
+
+                        <span class="text-xs text-cyan-300">
+                            ROV
+                        </span>
+
+                        <span class="text-xs text-cyan-300">
+                            Camera
+                        </span>
+
+                        <span class="text-xs text-cyan-300">
+                            Robotics
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PROJECT 3 -->
+
+            <div class="glass rounded-3xl overflow-hidden group">
+
+                <div class="h-56 overflow-hidden relative">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=900&q=85"
+                        class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
+                        alt="Ocean Engineering"
+                    >
+
+                    <div
+                        class="absolute top-4 left-4 px-3 py-1 rounded-full bg-indigo-500 text-white text-xs font-black"
+                    >
+                        MARINE
+                    </div>
+
+                </div>
+
+
+                <div class="p-6">
+
+                    <h3 class="text-xl font-black">
+                        Titanic Deep-Ocean Study
+                    </h3>
+
+                    <p class="text-sm text-slate-400 mt-3 leading-relaxed">
+                        Engineering study exploring Titanic's construction,
+                        deep-sea environment, underwater robotics and
+                        modern marine exploration.
+                    </p>
+
+                    <div class="mt-5 flex flex-wrap gap-2">
+
+                        <span class="text-xs text-cyan-300">
+                            Marine
+                        </span>
+
+                        <span class="text-xs text-cyan-300">
+                            ROV
+                        </span>
+
+                        <span class="text-xs text-cyan-300">
+                            Engineering
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PROJECT 4 -->
+
+            <div class="glass rounded-3xl overflow-hidden group">
+
+                <div class="h-56 overflow-hidden relative">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?auto=format&fit=crop&w=900&q=85"
+                        class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
+                        alt="Drone design"
+                    >
+
+                </div>
+
+
+                <div class="p-6">
+
+                    <h3 class="text-xl font-black">
+                        Lightweight Drone Frame
+                    </h3>
+
+                    <p class="text-sm text-slate-400 mt-3">
+                        CAD-based drone frame concept focusing on
+                        lightweight construction and structural strength.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- PROJECT 5 -->
+
+            <div class="glass rounded-3xl overflow-hidden group">
+
+                <div class="h-56 overflow-hidden relative">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1516939884455-1445c8652f83?auto=format&fit=crop&w=900&q=85"
+                        class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
+                        alt="Engineering"
+                    >
+
+                </div>
+
+
+                <div class="p-6">
+
+                    <h3 class="text-xl font-black">
+                        Smart Inspection Drone
+                    </h3>
+
+                    <p class="text-sm text-slate-400 mt-3">
+                        AI-assisted UAV concept for infrastructure
+                        inspection and visual defect detection.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- PROJECT 6 -->
+
+            <div class="glass rounded-3xl overflow-hidden group">
+
+                <div class="h-56 overflow-hidden relative">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=85"
+                        class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
+                        alt="Future technology"
+                    >
+
+                </div>
+
+
+                <div class="p-6">
+
+                    <h3 class="text-xl font-black">
+                        Future Autonomous Systems
+                    </h3>
+
+                    <p class="text-sm text-slate-400 mt-3">
+                        Exploring autonomous systems combining robotics,
+                        AI, sensors and mechanical engineering.
+                    </p>
 
                 </div>
 
@@ -1192,555 +1836,63 @@
 
         </div>
 
-    </section>
+    </div>
 
+</section>
 
 
-    <!-- ================= PROJECTS ================= -->
+<!-- ========================================================= -->
+<!-- JOURNEY -->
+<!-- ========================================================= -->
 
-    <section id="projects" class="py-24 relative z-10">
+<section class="py-28 bg-slate-950/70">
 
-        <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="max-w-5xl mx-auto px-5 sm:px-8">
 
-            <div class="text-center max-w-3xl mx-auto mb-12">
+        <div class="text-center mb-16">
 
-                <p class="text-xs font-bold uppercase
-                          tracking-[4px] text-drone-500 mb-4">
-                    Portfolio
-                </p>
+            <p class="text-cyan-400 text-xs font-bold tracking-[.3em]">
+                MY JOURNEY
+            </p>
 
-                <h2 class="text-3xl sm:text-4xl font-black">
-                    Drone & Engineering Projects
-                </h2>
-
-                <div class="section-line mt-6"></div>
-
-            </div>
-
-
-            <!-- Filters -->
-
-            <div class="flex flex-wrap justify-center
-                        gap-3 mb-12">
-
-                <button class="filter-btn active
-                               px-5 py-2.5 rounded-xl
-                               text-sm font-bold
-                               bg-drone-600 text-white"
-                        data-filter="all">
-
-                    All
-
-                </button>
-
-                <button class="filter-btn
-                               px-5 py-2.5 rounded-xl
-                               text-sm font-bold glass-card"
-                        data-filter="drone">
-
-                    Drone
-
-                </button>
-
-                <button class="filter-btn
-                               px-5 py-2.5 rounded-xl
-                               text-sm font-bold glass-card"
-                        data-filter="cad">
-
-                    CAD Design
-
-                </button>
-
-                <button class="filter-btn
-                               px-5 py-2.5 rounded-xl
-                               text-sm font-bold glass-card"
-                        data-filter="engineering">
-
-                    Engineering
-
-                </button>
-
-            </div>
-
-
-            <!-- Project Grid -->
-
-            <div id="projects-grid"
-                 class="grid grid-cols-1 md:grid-cols-2
-                        lg:grid-cols-3 gap-8">
-
-
-                <!-- Project 1 -->
-
-                <div class="project-card glass-card rounded-3xl
-                            overflow-hidden group
-                            hover:-translate-y-2
-                            transition-all"
-                     data-category="drone">
-
-                    <div class="h-56 relative overflow-hidden
-                                bg-gradient-to-br
-                                from-slate-900 to-drone-900">
-
-                        <img
-                            src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?auto=format&fit=crop&w=900&q=80"
-                            alt="Drone Technology"
-                            class="w-full h-full object-cover
-                                   opacity-80
-                                   group-hover:scale-110
-                                   transition duration-500">
-
-                        <div class="absolute inset-0
-                                    bg-gradient-to-t
-                                    from-slate-950/80
-                                    to-transparent">
-                        </div>
-
-                        <span class="absolute bottom-4 left-4
-                                     px-3 py-1 rounded-lg
-                                     bg-cyan-500/20
-                                     text-cyan-300 text-xs
-                                     font-bold border
-                                     border-cyan-400/20">
-
-                            UAV DESIGN
-
-                        </span>
-
-                    </div>
-
-
-                    <div class="p-6">
-
-                        <h3 class="text-xl font-bold mb-3">
-                            Smart Surveillance UAV
-                        </h3>
-
-                        <p class="text-sm
-                                  text-slate-600
-                                  dark:text-slate-400
-                                  leading-relaxed mb-5">
-
-                            Concept design for a compact UAV
-                            focused on surveillance and
-                            autonomous flight applications.
-
-                        </p>
-
-                        <a href="#contact"
-                           class="text-sm font-bold
-                                  text-drone-500">
-
-                            View Project
-                            <i class="fa-solid fa-arrow-right ml-1"></i>
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Project 2 -->
-
-                <div class="project-card glass-card rounded-3xl
-                            overflow-hidden group
-                            hover:-translate-y-2
-                            transition-all"
-                     data-category="cad">
-
-                    <div class="h-56 relative overflow-hidden">
-
-                        <img
-                            src="https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=900&q=80"
-                            alt="Drone CAD Design"
-                            class="w-full h-full object-cover
-                                   group-hover:scale-110
-                                   transition duration-500">
-
-                        <div class="absolute inset-0
-                                    bg-gradient-to-t
-                                    from-slate-950/80
-                                    to-transparent">
-                        </div>
-
-                        <span class="absolute bottom-4 left-4
-                                     px-3 py-1 rounded-lg
-                                     bg-sky-500/20
-                                     text-sky-300 text-xs
-                                     font-bold">
-
-                            CAD / CREO
-
-                        </span>
-
-                    </div>
-
-
-                    <div class="p-6">
-
-                        <h3 class="text-xl font-bold mb-3">
-                            Modular Drone Frame
-                        </h3>
-
-                        <p class="text-sm
-                                  text-slate-600
-                                  dark:text-slate-400
-                                  leading-relaxed mb-5">
-
-                            3D CAD concept for a lightweight
-                            modular drone frame designed for
-                            easy assembly and maintenance.
-
-                        </p>
-
-                        <a href="#contact"
-                           class="text-sm font-bold
-                                  text-drone-500">
-
-                            View Project
-                            <i class="fa-solid fa-arrow-right ml-1"></i>
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Project 3 -->
-
-                <div class="project-card glass-card rounded-3xl
-                            overflow-hidden group
-                            hover:-translate-y-2
-                            transition-all"
-                     data-category="engineering">
-
-                    <div class="h-56 relative overflow-hidden">
-
-                        <img
-                            src="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?auto=format&fit=crop&w=900&q=80"
-                            alt="Engineering Project"
-                            class="w-full h-full object-cover
-                                   group-hover:scale-110
-                                   transition duration-500">
-
-                        <div class="absolute inset-0
-                                    bg-gradient-to-t
-                                    from-slate-950/80
-                                    to-transparent">
-                        </div>
-
-                        <span class="absolute bottom-4 left-4
-                                     px-3 py-1 rounded-lg
-                                     bg-drone-500/20
-                                     text-drone-300 text-xs
-                                     font-bold">
-
-                            MECHANICAL
-
-                        </span>
-
-                    </div>
-
-
-                    <div class="p-6">
-
-                        <h3 class="text-xl font-bold mb-3">
-                            Lightweight UAV Structure
-                        </h3>
-
-                        <p class="text-sm
-                                  text-slate-600
-                                  dark:text-slate-400
-                                  leading-relaxed mb-5">
-
-                            Mechanical design study focused
-                            on reducing structural weight while
-                            maintaining strength and stability.
-
-                        </p>
-
-                        <a href="#contact"
-                           class="text-sm font-bold
-                                  text-drone-500">
-
-                            View Project
-                            <i class="fa-solid fa-arrow-right ml-1"></i>
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Project 4 -->
-
-                <div class="project-card glass-card rounded-3xl
-                            overflow-hidden group
-                            hover:-translate-y-2
-                            transition-all"
-                     data-category="drone">
-
-                    <div class="h-56 relative overflow-hidden
-                                bg-slate-900">
-
-                        <div class="absolute inset-0
-                                    flex items-center justify-center">
-
-                            <i class="fa-solid fa-helicopter
-                                      text-8xl text-cyan-400
-                                      opacity-80"></i>
-
-                        </div>
-
-                        <span class="absolute bottom-4 left-4
-                                     px-3 py-1 rounded-lg
-                                     bg-cyan-500/20
-                                     text-cyan-300 text-xs
-                                     font-bold">
-
-                            UAV CONCEPT
-
-                        </span>
-
-                    </div>
-
-
-                    <div class="p-6">
-
-                        <h3 class="text-xl font-bold mb-3">
-                            Agricultural Drone
-                        </h3>
-
-                        <p class="text-sm
-                                  text-slate-600
-                                  dark:text-slate-400
-                                  leading-relaxed mb-5">
-
-                            UAV concept for agricultural
-                            monitoring and precision farming
-                            applications.
-
-                        </p>
-
-                        <a href="#contact"
-                           class="text-sm font-bold
-                                  text-drone-500">
-
-                            View Project
-                            <i class="fa-solid fa-arrow-right ml-1"></i>
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Project 5 -->
-
-                <div class="project-card glass-card rounded-3xl
-                            overflow-hidden group
-                            hover:-translate-y-2
-                            transition-all"
-                     data-category="cad">
-
-                    <div class="h-56 relative overflow-hidden
-                                bg-gradient-to-br from-slate-900
-                                to-sky-900">
-
-                        <div class="absolute inset-0
-                                    flex items-center justify-center">
-
-                            <i class="fa-solid fa-cube
-                                      text-8xl text-sky-400
-                                      opacity-80"></i>
-
-                        </div>
-
-                        <span class="absolute bottom-4 left-4
-                                     px-3 py-1 rounded-lg
-                                     bg-sky-500/20
-                                     text-sky-300 text-xs
-                                     font-bold">
-
-                            SOLIDWORKS
-
-                        </span>
-
-                    </div>
-
-
-                    <div class="p-6">
-
-                        <h3 class="text-xl font-bold mb-3">
-                            Drone Landing Mechanism
-                        </h3>
-
-                        <p class="text-sm
-                                  text-slate-600
-                                  dark:text-slate-400
-                                  leading-relaxed mb-5">
-
-                            CAD-based mechanical concept for
-                            a compact and reliable UAV landing
-                            mechanism.
-
-                        </p>
-
-                        <a href="#contact"
-                           class="text-sm font-bold
-                                  text-drone-500">
-
-                            View Project
-                            <i class="fa-solid fa-arrow-right ml-1"></i>
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Project 6 -->
-
-                <div class="project-card glass-card rounded-3xl
-                            overflow-hidden group
-                            hover:-translate-y-2
-                            transition-all"
-                     data-category="engineering">
-
-                    <div class="h-56 relative overflow-hidden
-                                bg-gradient-to-br
-                                from-slate-900 to-cyan-900">
-
-                        <div class="absolute inset-0
-                                    flex items-center justify-center">
-
-                            <i class="fa-solid fa-gears
-                                      text-8xl text-cyan-400
-                                      opacity-80"></i>
-
-                        </div>
-
-                        <span class="absolute bottom-4 left-4
-                                     px-3 py-1 rounded-lg
-                                     bg-cyan-500/20
-                                     text-cyan-300 text-xs
-                                     font-bold">
-
-                            ENGINEERING
-
-                        </span>
-
-                    </div>
-
-
-                    <div class="p-6">
-
-                        <h3 class="text-xl font-bold mb-3">
-                            UAV Propulsion Study
-                        </h3>
-
-                        <p class="text-sm
-                                  text-slate-600
-                                  dark:text-slate-400
-                                  leading-relaxed mb-5">
-
-                            Engineering study exploring
-                            propulsion, propeller selection
-                            and drone performance concepts.
-
-                        </p>
-
-                        <a href="#contact"
-                           class="text-sm font-bold
-                                  text-drone-500">
-
-                            View Project
-                            <i class="fa-solid fa-arrow-right ml-1"></i>
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
+            <h2 class="text-4xl sm:text-5xl font-black mt-4">
+                Engineering Journey
+            </h2>
 
         </div>
 
-    </section>
+
+        <div class="relative">
+
+            <div
+                class="absolute left-5 top-0 bottom-0 w-px timeline-line"
+            ></div>
 
 
-
-    <!-- ================= EXPERIENCE ================= -->
-
-    <section id="experience"
-             class="py-24 bg-slate-100/50
-                    dark:bg-slate-900/30 relative z-10">
-
-        <div class="max-w-5xl mx-auto px-5 sm:px-8">
-
-            <div class="text-center mb-16">
-
-                <p class="text-xs font-bold uppercase
-                          tracking-[4px] text-drone-500 mb-4">
-                    My Journey
-                </p>
-
-                <h2 class="text-3xl sm:text-4xl font-black">
-                    Education & Engineering Journey
-                </h2>
-
-                <div class="section-line mt-6"></div>
-
-            </div>
+            <div class="space-y-12">
 
 
-            <div class="relative border-l-2
-                        border-drone-500/20 ml-4
-                        space-y-10">
+                <div class="relative pl-14">
 
-
-                <!-- Timeline 1 -->
-
-                <div class="relative pl-8">
-
-                    <div class="absolute -left-[10px] top-1
-                                w-4 h-4 rounded-full
-                                bg-drone-500
-                                ring-4 ring-slate-100
-                                dark:ring-slate-900">
+                    <div
+                        class="absolute left-0 w-10 h-10 rounded-full bg-cyan-500 text-slate-950 flex items-center justify-center"
+                    >
+                        <i class="fa-solid fa-graduation-cap"></i>
                     </div>
 
-                    <div class="glass-card p-6 rounded-2xl">
+                    <div class="glass rounded-2xl p-6">
 
-                        <span class="text-xs font-bold
-                                     text-drone-500">
-                            PRESENT
-                        </span>
+                        <p class="text-xs text-cyan-400 font-bold">
+                            EDUCATION
+                        </p>
 
-                        <h3 class="text-xl font-bold mt-2">
+                        <h3 class="text-xl font-black mt-2">
                             Mechanical Engineering
                         </h3>
 
-                        <p class="text-sm font-semibold
-                                  text-drone-500 mt-1">
-                            Sri Sairam Institute of Technology
-                        </p>
-
-                        <p class="text-sm text-slate-600
-                                  dark:text-slate-400 mt-4
-                                  leading-relaxed">
-
-                            Building a strong foundation in
-                            mechanical engineering, CAD,
-                            manufacturing, design and
-                            engineering problem solving.
-
+                        <p class="text-sm text-slate-400 mt-2">
+                            Building strong fundamentals in mechanical
+                            engineering, design and manufacturing.
                         </p>
 
                     </div>
@@ -1748,37 +1900,27 @@
                 </div>
 
 
-                <!-- Timeline 2 -->
+                <div class="relative pl-14">
 
-                <div class="relative pl-8">
-
-                    <div class="absolute -left-[10px] top-1
-                                w-4 h-4 rounded-full
-                                bg-cyan-400
-                                ring-4 ring-slate-100
-                                dark:ring-slate-900">
+                    <div
+                        class="absolute left-0 w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center"
+                    >
+                        <i class="fa-solid fa-compass-drafting"></i>
                     </div>
 
-                    <div class="glass-card p-6 rounded-2xl">
+                    <div class="glass rounded-2xl p-6">
 
-                        <span class="text-xs font-bold
-                                     text-cyan-500">
-                            DESIGN JOURNEY
-                        </span>
+                        <p class="text-xs text-blue-400 font-bold">
+                            DESIGN
+                        </p>
 
-                        <h3 class="text-xl font-bold mt-2">
-                            CAD & 3D Design
+                        <h3 class="text-xl font-black mt-2">
+                            CAD & Product Design
                         </h3>
 
-                        <p class="text-sm text-slate-600
-                                  dark:text-slate-400 mt-4
-                                  leading-relaxed">
-
-                            Developing practical experience
-                            with Creo, SolidWorks and CAD
-                            modelling while exploring
-                            mechanical product design.
-
+                        <p class="text-sm text-slate-400 mt-2">
+                            Developing skills in Creo, SolidWorks,
+                            AutoCAD and mechanical design.
                         </p>
 
                     </div>
@@ -1786,36 +1928,27 @@
                 </div>
 
 
-                <!-- Timeline 3 -->
+                <div class="relative pl-14">
 
-                <div class="relative pl-8">
-
-                    <div class="absolute -left-[10px] top-1
-                                w-4 h-4 rounded-full
-                                bg-electric
-                                ring-4 ring-slate-100
-                                dark:ring-slate-900">
+                    <div
+                        class="absolute left-0 w-10 h-10 rounded-full bg-indigo-500 text-white flex items-center justify-center"
+                    >
+                        <i class="fa-solid fa-drone"></i>
                     </div>
 
-                    <div class="glass-card p-6 rounded-2xl">
+                    <div class="glass rounded-2xl p-6">
 
-                        <span class="text-xs font-bold
-                                     text-sky-500">
-                            FUTURE FOCUS
-                        </span>
+                        <p class="text-xs text-indigo-400 font-bold">
+                            FUTURE
+                        </p>
 
-                        <h3 class="text-xl font-bold mt-2">
-                            Drone & Aerospace Technology
+                        <h3 class="text-xl font-black mt-2">
+                            Drone & Autonomous Technology
                         </h3>
 
-                        <p class="text-sm text-slate-600
-                                  dark:text-slate-400 mt-4
-                                  leading-relaxed">
-
-                            Exploring UAV design, aerospace
-                            engineering, drone systems and
-                            advanced mechanical design.
-
+                        <p class="text-sm text-slate-400 mt-2">
+                            Exploring UAVs, robotics, AI and autonomous
+                            systems for real-world engineering applications.
                         </p>
 
                     </div>
@@ -1826,105 +1959,102 @@
 
         </div>
 
-    </section>
+    </div>
+
+</section>
 
 
+<!-- ========================================================= -->
+<!-- CONTACT -->
+<!-- ========================================================= -->
 
-    <!-- ================= CONTACT ================= -->
+<section id="contact" class="py-28">
 
-    <section id="contact" class="py-24 relative z-10">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
 
-        <div class="max-w-7xl mx-auto px-5 sm:px-8">
-
-            <div class="grid grid-cols-1 lg:grid-cols-12
-                        gap-12">
-
-                <!-- Left -->
-
-                <div class="lg:col-span-5">
-
-                    <p class="text-xs font-bold uppercase
-                              tracking-[4px] text-drone-500 mb-4">
-                        Contact
-                    </p>
-
-                    <h2 class="text-4xl sm:text-5xl
-                               font-black leading-tight">
-
-                        Let's build the
-                        <span class="text-drone-500">
-                            future of flight.
-                        </span>
-
-                    </h2>
-
-                    <p class="text-slate-600
-                              dark:text-slate-400
-                              leading-relaxed mt-6">
-
-                        Interested in drone technology,
-                        mechanical design, CAD projects or
-                        engineering collaborations?
-                        Let's connect.
-
-                    </p>
+        <div class="grid lg:grid-cols-2 gap-12">
 
 
-                    <div class="space-y-5 mt-10">
+            <div>
 
-                        <div class="flex items-center gap-4">
+                <p class="text-cyan-400 text-xs font-bold tracking-[.3em]">
+                    CONTACT
+                </p>
 
-                            <div class="w-12 h-12 rounded-xl
-                                        glass-card
-                                        flex items-center
-                                        justify-center
-                                        text-drone-500">
+                <h2 class="text-4xl sm:text-6xl font-black mt-4">
+                    Let's build
+                    <span class="gradient-text">
+                        something
+                    </span>
+                    futuristic.
+                </h2>
 
-                                <i class="fa-solid fa-envelope"></i>
+                <p class="text-slate-400 mt-6 leading-relaxed max-w-lg">
+                    Interested in drone technology, mechanical design,
+                    robotics, ocean exploration or engineering projects?
+                    Let's connect.
+                </p>
 
-                            </div>
 
-                            <div>
+                <div class="mt-10 space-y-5">
 
-                                <p class="text-xs text-slate-500">
-                                    Email
-                                </p>
+                    <div class="flex items-center gap-4">
 
-                                <a href="mailto:kavearasu@example.com"
-                                   class="font-bold hover:text-drone-500">
+                        <div class="w-12 h-12 glass rounded-xl flex items-center justify-center text-cyan-400">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
 
-                                    kavearasu@example.com
+                        <div>
 
-                                </a>
+                            <p class="text-xs text-slate-500">
+                                EMAIL
+                            </p>
 
-                            </div>
+                            <p class="font-bold">
+                                yourmail@example.com
+                            </p>
 
                         </div>
 
+                    </div>
 
-                        <div class="flex items-center gap-4">
 
-                            <div class="w-12 h-12 rounded-xl
-                                        glass-card
-                                        flex items-center
-                                        justify-center
-                                        text-cyan-500">
+                    <div class="flex items-center gap-4">
 
-                                <i class="fa-solid fa-location-dot"></i>
+                        <div class="w-12 h-12 glass rounded-xl flex items-center justify-center text-cyan-400">
+                            <i class="fa-brands fa-linkedin"></i>
+                        </div>
 
-                            </div>
+                        <div>
 
-                            <div>
+                            <p class="text-xs text-slate-500">
+                                LINKEDIN
+                            </p>
 
-                                <p class="text-xs text-slate-500">
-                                    Location
-                                </p>
+                            <p class="font-bold">
+                                Kavearasu
+                            </p>
 
-                                <p class="font-bold">
-                                    Tamil Nadu, India
-                                </p>
+                        </div>
 
-                            </div>
+                    </div>
+
+
+                    <div class="flex items-center gap-4">
+
+                        <div class="w-12 h-12 glass rounded-xl flex items-center justify-center text-cyan-400">
+                            <i class="fa-brands fa-github"></i>
+                        </div>
+
+                        <div>
+
+                            <p class="text-xs text-slate-500">
+                                GITHUB
+                            </p>
+
+                            <p class="font-bold">
+                                Kavearasu
+                            </p>
 
                         </div>
 
@@ -1932,432 +2062,312 @@
 
                 </div>
 
-
-                <!-- Form -->
-
-                <div class="lg:col-span-7">
-
-                    <div class="glass-card p-8
-                                sm:p-10 rounded-3xl">
-
-                        <div id="form-alert"
-                             class="hidden p-4 mb-6
-                                    rounded-xl text-sm">
-                        </div>
+            </div>
 
 
-                        <form id="contact-form"
-                              class="space-y-6">
+            <!-- FORM -->
 
+            <div class="glass rounded-3xl p-7 sm:p-10 neon-border">
 
-                            <div class="grid grid-cols-1
-                                        sm:grid-cols-2 gap-6">
+                <form id="contactForm" class="space-y-5">
 
-                                <div>
+                    <div>
 
-                                    <label class="block text-xs
-                                                  font-bold uppercase
-                                                  mb-2">
+                        <label class="text-xs text-slate-400">
+                            YOUR NAME
+                        </label>
 
-                                        Your Name
-
-                                    </label>
-
-                                    <input id="name"
-                                           required
-                                           type="text"
-                                           placeholder="Your Name"
-                                           class="w-full px-4 py-3
-                                                  rounded-xl glass
-                                                  border border-slate-300
-                                                  dark:border-slate-800
-                                                  outline-none
-                                                  focus:ring-2
-                                                  focus:ring-drone-500">
-
-                                </div>
-
-
-                                <div>
-
-                                    <label class="block text-xs
-                                                  font-bold uppercase
-                                                  mb-2">
-
-                                        Email
-
-                                    </label>
-
-                                    <input id="email"
-                                           required
-                                           type="email"
-                                           placeholder="you@example.com"
-                                           class="w-full px-4 py-3
-                                                  rounded-xl glass
-                                                  border border-slate-300
-                                                  dark:border-slate-800
-                                                  outline-none
-                                                  focus:ring-2
-                                                  focus:ring-drone-500">
-
-                                </div>
-
-                            </div>
-
-
-                            <div>
-
-                                <label class="block text-xs
-                                              font-bold uppercase
-                                              mb-2">
-
-                                    Subject
-
-                                </label>
-
-                                <input id="subject"
-                                       required
-                                       type="text"
-                                       placeholder="Project / Collaboration"
-                                       class="w-full px-4 py-3
-                                              rounded-xl glass
-                                              border border-slate-300
-                                              dark:border-slate-800
-                                              outline-none
-                                              focus:ring-2
-                                              focus:ring-drone-500">
-
-                            </div>
-
-
-                            <div>
-
-                                <label class="block text-xs
-                                              font-bold uppercase
-                                              mb-2">
-
-                                    Message
-
-                                </label>
-
-                                <textarea id="message"
-                                          required
-                                          rows="5"
-                                          placeholder="Tell me about your idea..."
-                                          class="w-full px-4 py-3
-                                                 rounded-xl glass
-                                                 border border-slate-300
-                                                 dark:border-slate-800
-                                                 outline-none
-                                                 focus:ring-2
-                                                 focus:ring-drone-500">
-                                </textarea>
-
-                            </div>
-
-
-                            <button type="submit"
-                                    class="w-full py-4 rounded-xl
-                                           bg-gradient-to-r
-                                           from-drone-600
-                                           to-electric
-                                           text-white font-bold
-                                           shadow-xl
-                                           shadow-cyan-500/20
-                                           hover:-translate-y-1
-                                           transition">
-
-                                <i class="fa-solid fa-paper-plane mr-2"></i>
-
-                                Send Message
-
-                            </button>
-
-                        </form>
+                        <input
+                            type="text"
+                            required
+                            placeholder="Your name"
+                            class="mt-2 w-full px-4 py-4 rounded-xl bg-slate-950/70 border border-slate-800 focus:border-cyan-400 focus:outline-none transition"
+                        >
 
                     </div>
 
-                </div>
+
+                    <div>
+
+                        <label class="text-xs text-slate-400">
+                            EMAIL
+                        </label>
+
+                        <input
+                            type="email"
+                            required
+                            placeholder="you@example.com"
+                            class="mt-2 w-full px-4 py-4 rounded-xl bg-slate-950/70 border border-slate-800 focus:border-cyan-400 focus:outline-none transition"
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label class="text-xs text-slate-400">
+                            SUBJECT
+                        </label>
+
+                        <input
+                            type="text"
+                            required
+                            placeholder="Project / Collaboration"
+                            class="mt-2 w-full px-4 py-4 rounded-xl bg-slate-950/70 border border-slate-800 focus:border-cyan-400 focus:outline-none transition"
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label class="text-xs text-slate-400">
+                            MESSAGE
+                        </label>
+
+                        <textarea
+                            required
+                            rows="5"
+                            placeholder="Tell me about your idea..."
+                            class="mt-2 w-full px-4 py-4 rounded-xl bg-slate-950/70 border border-slate-800 focus:border-cyan-400 focus:outline-none transition resize-none"
+                        ></textarea>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="w-full py-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black transition"
+                    >
+
+                        <i class="fa-solid fa-paper-plane mr-2"></i>
+
+                        Send Message
+
+                    </button>
+
+
+                    <div
+                        id="formMessage"
+                        class="hidden text-center text-sm text-emerald-400"
+                    >
+                        Message submitted successfully.
+                    </div>
+
+                </form>
 
             </div>
 
         </div>
 
-    </section>
+    </div>
+
+</section>
 
 
+<!-- ========================================================= -->
+<!-- FOOTER -->
+<!-- ========================================================= -->
 
-    <!-- ================= FOOTER ================= -->
+<footer
+    class="border-t border-slate-800 py-10"
+>
 
-    <footer class="py-10 border-t
-                   border-slate-200
-                   dark:border-slate-800">
+    <div
+        class="max-w-7xl mx-auto px-5 sm:px-8 flex flex-col sm:flex-row justify-between items-center gap-5"
+    >
 
-        <div class="max-w-7xl mx-auto px-5
-                    flex flex-col sm:flex-row
-                    items-center justify-between gap-5">
+        <div class="flex items-center gap-3">
 
-            <div class="flex items-center gap-3">
+            <div
+                class="w-9 h-9 rounded-lg bg-cyan-500 text-slate-950 flex items-center justify-center"
+            >
 
-                <div class="w-9 h-9 rounded-xl
-                            bg-gradient-to-br
-                            from-drone-500
-                            to-electric
-                            text-white
-                            flex items-center justify-center">
-
-                    <i class="fa-solid fa-drone"></i>
-
-                </div>
-
-                <div>
-
-                    <p class="font-bold">
-                        Kavearasu
-                    </p>
-
-                    <p class="text-xs text-slate-500">
-                        Drone Technology & Mechanical Design
-                    </p>
-
-                </div>
+                <i class="fa-solid fa-drone"></i>
 
             </div>
 
+            <div>
 
-            <p class="text-xs text-slate-500">
+                <p class="font-black">
+                    KAVEARASU
+                </p>
 
-                © <span id="year"></span> Kavearasu.
-                All rights reserved.
-
-            </p>
-
-
-            <div class="flex gap-5 text-lg">
-
-                <a href="#"
-                   class="hover:text-drone-500 transition">
-
-                    <i class="fa-brands fa-linkedin"></i>
-
-                </a>
-
-                <a href="#"
-                   class="hover:text-drone-500 transition">
-
-                    <i class="fa-brands fa-github"></i>
-
-                </a>
-
-                <a href="#"
-                   class="hover:text-drone-500 transition">
-
-                    <i class="fa-brands fa-instagram"></i>
-
-                </a>
+                <p class="text-[9px] text-slate-500 tracking-widest">
+                    DRONE • OCEAN • ENGINEERING
+                </p>
 
             </div>
 
         </div>
 
-    </footer>
+
+        <p class="text-xs text-slate-500">
+            © <span id="year"></span> Kavearasu. Engineering the future.
+        </p>
 
 
+        <div class="flex gap-5">
 
-    <!-- ================= JAVASCRIPT ================= -->
+            <a href="#" class="hover:text-cyan-400">
+                <i class="fa-brands fa-github"></i>
+            </a>
 
-    <script>
+            <a href="#" class="hover:text-cyan-400">
+                <i class="fa-brands fa-linkedin"></i>
+            </a>
 
-        /* Year */
+            <a href="#" class="hover:text-cyan-400">
+                <i class="fa-solid fa-envelope"></i>
+            </a>
 
-        document.getElementById("year").textContent =
-            new Date().getFullYear();
+        </div>
 
+    </div>
 
-        /* ================= THEME ================= */
-
-        const themeToggle =
-            document.getElementById("theme-toggle");
-
-        const darkIcon =
-            document.getElementById("dark-icon");
-
-        const lightIcon =
-            document.getElementById("light-icon");
+</footer>
 
 
-        function setTheme() {
+<!-- ========================================================= -->
+<!-- JAVASCRIPT -->
+<!-- ========================================================= -->
 
-            const theme =
-                localStorage.getItem("theme");
+<script>
 
-            if (theme === "dark") {
+    /* Current Year */
 
-                document.documentElement.classList.add("dark");
-
-                darkIcon.classList.add("hidden");
-                lightIcon.classList.remove("hidden");
-
-            } else {
-
-                document.documentElement.classList.remove("dark");
-
-                darkIcon.classList.remove("hidden");
-                lightIcon.classList.add("hidden");
-
-            }
-
-        }
+    document.getElementById("year").textContent =
+        new Date().getFullYear();
 
 
-        themeToggle.addEventListener("click", () => {
+    /* Mobile Menu */
 
-            document.documentElement.classList.toggle("dark");
+    const menuBtn =
+        document.getElementById("menuBtn");
 
-            const isDark =
-                document.documentElement.classList.contains("dark");
+    const mobileMenu =
+        document.getElementById("mobileMenu");
 
-            localStorage.setItem(
-                "theme",
-                isDark ? "dark" : "light"
-            );
+    menuBtn.addEventListener("click", () => {
 
-            setTheme();
+        mobileMenu.classList.toggle("hidden");
 
-        });
+    });
 
 
-        setTheme();
+    /* Close mobile menu */
 
+    document.querySelectorAll("#mobileMenu a")
+        .forEach(link => {
 
+            link.addEventListener("click", () => {
 
-        /* ================= MOBILE MENU ================= */
-
-        const menuBtn =
-            document.getElementById("mobile-menu-btn");
-
-        const mobileMenu =
-            document.getElementById("mobile-menu");
-
-
-        menuBtn.addEventListener("click", () => {
-
-            mobileMenu.classList.toggle("hidden");
-
-        });
-
-
-        document.querySelectorAll(".mobile-link")
-            .forEach(link => {
-
-                link.addEventListener("click", () => {
-
-                    mobileMenu.classList.add("hidden");
-
-                });
+                mobileMenu.classList.add("hidden");
 
             });
 
+        });
 
 
-        /* ================= PROJECT FILTER ================= */
+    /* Theme */
 
-        const filterButtons =
-            document.querySelectorAll(".filter-btn");
+    const themeToggle =
+        document.getElementById("themeToggle");
 
-        const projectCards =
-            document.querySelectorAll(".project-card");
+    let lightMode = false;
+
+    themeToggle.addEventListener("click", () => {
+
+        lightMode = !lightMode;
+
+        if (lightMode) {
+
+            document.body.style.background =
+                "#f0f9ff";
+
+            document.body.classList.add("text-slate-900");
+
+            themeToggle.innerHTML =
+                '<i class="fa-solid fa-moon"></i>';
+
+        } else {
+
+            document.body.style.background =
+                "#020617";
+
+            document.body.classList.remove("text-slate-900");
+
+            themeToggle.innerHTML =
+                '<i class="fa-solid fa-sun"></i>';
+
+        }
+
+    });
 
 
-        filterButtons.forEach(button => {
+    /* Contact Form */
 
-            button.addEventListener("click", () => {
+    const contactForm =
+        document.getElementById("contactForm");
 
-                const filter =
-                    button.dataset.filter;
+    const formMessage =
+        document.getElementById("formMessage");
 
+    contactForm.addEventListener("submit", function(e) {
 
-                filterButtons.forEach(btn => {
+        e.preventDefault();
 
-                    btn.classList.remove(
-                        "bg-drone-600",
-                        "text-white"
-                    );
+        formMessage.classList.remove("hidden");
 
-                    btn.classList.add("glass-card");
+        contactForm.reset();
 
-                });
+        setTimeout(() => {
 
+            formMessage.classList.add("hidden");
 
-                button.classList.add(
-                    "bg-drone-600",
-                    "text-white"
-                );
+        }, 5000);
 
-                button.classList.remove("glass-card");
+    });
 
 
-                projectCards.forEach(card => {
+    /* Smooth reveal */
 
-                    if (
-                        filter === "all" ||
-                        card.dataset.category === filter
-                    ) {
+    const observer =
+        new IntersectionObserver(
+            entries => {
 
-                        card.style.display = "block";
+                entries.forEach(entry => {
 
-                    } else {
+                    if (entry.isIntersecting) {
 
-                        card.style.display = "none";
+                        entry.target.style.opacity = "1";
+
+                        entry.target.style.transform =
+                            "translateY(0)";
 
                     }
 
                 });
 
-            });
-
-        });
-
-
-
-        /* ================= CONTACT FORM ================= */
-
-        const form =
-            document.getElementById("contact-form");
-
-        const alertBox =
-            document.getElementById("form-alert");
+            },
+            {
+                threshold: 0.1
+            }
+        );
 
 
-        form.addEventListener("submit", function(e) {
+    document.querySelectorAll(
+        "section > div, .glass"
+    ).forEach(el => {
 
-            e.preventDefault();
+        el.style.transition =
+            "opacity .7s ease, transform .7s ease";
 
+        observer.observe(el);
 
-            alertBox.className =
-                "p-4 mb-6 rounded-xl text-sm bg-cyan-500/10 text-cyan-500 border border-cyan-500/30";
+    });
 
-
-            alertBox.innerHTML =
-                '<i class="fa-solid fa-circle-check mr-2"></i>' +
-                'Thank you! Your message has been received.';
-
-
-            alertBox.classList.remove("hidden");
-
-
-            form.reset();
-
-
-            setTimeout(() => {
-
-                alertBox.classList.add("hidden");
-
-            }, 5000);
-
-        });
-
-    </script>
+</script>
 
 </body>
 </html>
